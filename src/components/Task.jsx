@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import TaskContext from "../context/TaskContext";
+import useTaskStore from "../store/useTaskStore";
 
-const Task = ({ job: { id, title, isDone }, removeTask, doneTask }) => {
+const Task = ({ job: { id, title, isDone } }) => {
+  // const { removeTask, doneTask } = useContext(TaskContext);
+
+  // with zustand
+  const { tasks, removeTask, doneTask } = useTaskStore();
   const handleDeleteBtn = () => {
     if (confirm("Are you sure to delete?")) {
       removeTask(id);
@@ -19,7 +25,9 @@ const Task = ({ job: { id, title, isDone }, removeTask, doneTask }) => {
           type="checkbox"
           className="accent-stone-900"
         />
-        <p className={isDone ? "line-through text-gray-500 text-sm" : ""}>{title}</p>
+        <p className={isDone ? "line-through text-gray-500 text-sm" : ""}>
+          {title}
+        </p>
       </div>
       <button
         onClick={handleDeleteBtn}
